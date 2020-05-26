@@ -8,4 +8,14 @@ def about(request):
     return render(request, 'about.html')
 
 def result(request):
-    return render(request, 'result.html')
+
+    text = request.GET['fulltext']
+    words = text.split()
+    word_dict={}
+    for word in words:
+        if word in word_dict:
+            word_dict[word]+=1
+        else:
+            word_dict[word]=1
+
+    return render(request, 'result.html',{'full':text, 'total':len(words), 'dictionary':word_dict.items()})
